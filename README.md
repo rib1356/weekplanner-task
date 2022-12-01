@@ -24,6 +24,30 @@ A mobile form factor should be targeted.
 
 A file called `data.json` is provided containing a list of sessions to be scheduled. Your tool should load data from this file.
 
+A session looks like this:
+
+```json
+{
+    "name": "Max Hangs",
+    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "type": "Strength and Power",
+    "type_colour": "#f55142",
+    "length": 20,
+    "target_intensity": 9,
+    "target_fatigue": 4,
+    "variation": "Four finger Half Crimp"
+}
+```
+
+ - `name` is the name of the session.
+ - `description` is a long form description of the session, with details of how the session should be performed, sets, reps etc.
+ - `type` is the type of the session.
+ - `type_colour` is a colour associated with the type of the session.
+ - `length` is the length of the session in minutes.
+ - `target_intensity` is a score from 1 to 10 describing how hard the user should be trying in the session.
+ - `target_fatigue` is a score from 1 to 10 describing how fatigued the user should feel after the session.
+ - `variation` is an optional field that can be used to describe minor modifications to the session.
+
 ## Deliverables
 
 You should start by forking this repo. Commit your changes to your fork and provide a link to your forked repo.
