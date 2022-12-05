@@ -11,7 +11,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
   <link rel="stylesheet" href="weekPlannerStyles.css">
 </head>
 
@@ -36,12 +36,12 @@
                   </div>
                   <div class="row">
                     <div class="col-sm-4 col-md-4 col-lg-4">
-                      <button type="button" class="btn btn-primary" style="width: 100%; margin-top:5px;" @click="viewExtraSessionDetails(session)">View Extra Details {{session.dateSelected}}</button>
+                      <button type="button" class="btn btn-primary" style="width: 100%; margin-top:5px;" @click="viewExtraSessionDetails(session)">View Extra Details</button>
                     </div>
                     <div class="col-sm-4 col-md-4 col-lg-4">
                       <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="dateSelector" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%; margin-top:5px;">
-                          session
+                          Choose Date
                         </button>
                         <ul class="dropdown-menu" style="width: 100%;">
                           <li @click="sessionDateSelected('Monday', session)"><a class="dropdown-item">Monday</a></li>
@@ -63,17 +63,14 @@
             </div>
           </div>
         </div>
-        <div class="row" style="margin-top: 10px;"> <!-- Date Picker starts here-->
-          <div class="col-sm-12 col-md-12 col-lg-12">
-          </div>
-        </div>
       </div>
       <div class="col-sm-12 col-md-12 col-lg-8 session-container">
         <h2 class="session-text">Weekly Log</h2>
         <div class="weekday-grid-wrapper"> <!-- Using Grid template here instead of bootstraps rows/cols-->
           <div style="grid-column: 1; grid-row: 1; background-color: #F8A3A8;" class="weekday weekday-column">
             <p class="weekday-text">Monday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0)}} min </p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 1;" class="weekday session-cards-column" >
             <div v-for="cardSession in plannerData.Monday"> <!-- This should be a component that gets the date passed in and means it only had to be changed in one place-->
@@ -82,7 +79,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -94,7 +91,8 @@
           </div>
           <div style="grid-column: 1; grid-row: 2; background-color: #F3C6A5;" class="weekday weekday-column">
             <p class="weekday-text">Tuesday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 2;" class="weekday session-cards-column">
             <div v-for="cardSession in plannerData.Tuesday">
@@ -103,7 +101,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -115,7 +113,8 @@
           </div>
           <div style="grid-column: 1; grid-row: 3; background-color: #E5E1AB;" class="weekday weekday-column">
             <p class="weekday-text">Wednesday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 3;" class="weekday session-cards-column">
             <div v-for="cardSession in plannerData.Wednesday">
@@ -124,7 +123,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -136,7 +135,8 @@
           </div>
           <div style="grid-column: 1; grid-row: 4; background-color: #9CDCAA;" class="weekday weekday-column">
             <p class="weekday-text">Thursday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 4;" class="weekday session-cards-column">
             <div v-for="cardSession in plannerData.Thursday">
@@ -145,7 +145,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -157,7 +157,8 @@
           </div>
           <div style="grid-column: 1; grid-row: 5; background-color: 96CAF7;" class="weekday weekday-column">
             <p class="weekday-text">Friday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 5;" class="weekday session-cards-column">
             <div v-for="cardSession in plannerData.Friday">
@@ -166,7 +167,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -178,7 +179,8 @@
           </div>
           <div style="grid-column: 1; grid-row: 6; background-color: #BFB2F3;" class="weekday weekday-column">
             <p class="weekday-text">Saturday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 6;" class="weekday session-cards-column">
             <div v-for="cardSession in plannerData.Saturday">
@@ -187,7 +189,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -199,7 +201,8 @@
           </div>
           <div style="grid-column: 1; grid-row: 7; background-color: #97C1A9;" class="weekday weekday-column">
             <p class="weekday-text">Sunday</p>
-            <p class="session-length-text">Session Length: 20min</p>
+            <p class="session-length-text" v-if="sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+            <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 7;" class="weekday session-cards-column">
             <div v-for="cardSession in plannerData.Sunday">
@@ -208,7 +211,7 @@
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
                       <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}}</h4>
+                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
                       <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
                       <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
                       <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
@@ -222,52 +225,55 @@
       </div>  
     </div>
   </div>
-  <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="extraSessionDetailModal">
-    <div class="modal-dialog modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Additional Session Information</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeSessionDetailModal"></button>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Name:</strong> {{this.selectedSession.name}} </p>
+  
+    <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="extraSessionDetailModal">
+      <div>
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Additional Session Information</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" @click="closeSessionDetailModal"></button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Name:</strong> {{this.selectedSession.name}} </p>
+              </div>
+            </div>
+            <div class="row" v-if="this.selectedSession.variation != null">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Variation :</strong> {{this.selectedSession.variation}} </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Description:</strong> {{this.selectedSession.description}} </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Type:</strong> {{this.selectedSession.type}} </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Length:</strong> {{this.selectedSession.length}} Minutes</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Target Intensity:</strong> {{this.selectedSession.target_intensity}} </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-md-12 col-lg-12">
+                <p><strong>Target Fatigue:</strong> {{this.selectedSession.target_fatigue}} </p>
+              </div>
             </div>
           </div>
-          <div class="row" v-if="this.selectedSession.variation != null">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Variation :</strong> {{this.selectedSession.variation}} </p>
-            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="closeSessionDetailModal" style="width: 50%;">Close</button>
           </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Description:</strong> {{this.selectedSession.description}} </p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Type:</strong> {{this.selectedSession.type}} </p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Length:</strong> {{this.selectedSession.length}} Minutes</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Target Intensity:</strong> {{this.selectedSession.target_intensity}} </p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-xs-12 col-md-12 col-lg-12">
-              <p><strong>Target Fatigue:</strong> {{this.selectedSession.target_fatigue}} </p>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal" @click="closeSessionDetailModal" style="width: 50%;">Close</button>
         </div>
       </div>
     </div>
@@ -282,8 +288,33 @@ createApp({
     return {
       count: 0,
       toShow: true,
-      plannerData: {
-        "Unscheduled": [
+      plannerData: {},
+      sessionTypes: [],
+      selectedSession: {},
+      sessionLengths: { //Object of arrays to calculate session lengths
+        "Monday": [],
+        "Tuesday": [],
+        "Wednesday": [],
+        "Thursday": [],
+        "Friday": [],
+        "Saturday": [],
+        "Sunday": [],
+      },
+      mondayLength: 0,
+    }
+  },
+  mounted() {
+    console.log("mounted")
+    //Unable to read the data locally from json opening from just a HTML file due to security?
+    //Running through a local server should be easy enough to read and then assign to variable
+    //Could host json file somewhere and make an ajax query to it.
+
+    // $.getJSON("data.json", function(json) {
+    //   console.log(json)
+    // });
+
+    this.plannerData = {
+      "Unscheduled": [
         {
             "name": "Max Hangs",
             "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
@@ -435,35 +466,18 @@ createApp({
             "variation": null
         }
         ],
-        "Monday": [{
-            "name": "Max Hangs",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Strength and Power",
-            "type_colour": "#ff968a",
-            "length": 20,
-            "target_intensity": 9,
-            "target_fatigue": 4,
-            "variation": "Four finger Half Crimp"
-        }],
+        "Monday": [],
         "Tuesday": [],
         "Wednesday": [],
         "Thursday": [],
         "Friday": [],
         "Saturday": [],
         "Sunday": []
-      },
-      sessionTypes: [],
-      selectedSession: {},
-    }
-  },
-  mounted() {
-    console.log("mounted")
-    //Read the data from a json file and push into session types to display on front end cards
+      }
     for(i = 0; i < this.plannerData.Unscheduled.length; i++) {
       this.plannerData.Unscheduled[i].isAssigned = false;
       this.plannerData.Unscheduled[i].dateSelected = null;
     }
-    console.log(this.sessionTypes)
   },
   methods: {
     sessionDateSelected(dateSelected, selectedSession) {
@@ -478,38 +492,66 @@ createApp({
       $('#extraSessionDetailModal').hide();
     },
     addSession(selectedSession) {
-      var result  = this.plannerData.Unscheduled.filter(function(obj){return obj.name == selectedSession.name && obj.isAssigned == false}); //Find all sessions that belong to what has been chosen
-      result[result.length - 1].isAssigned = true; //Assign the latest session in the array based of the length of session that are unassigned 
-      console.log(result[result.length - 1])
-      if (result[result.length - 1].dateSelected == null) { //If the date is null dont add it and show error
-        console.log("dateisnull")
-      } else {
-        switch (result[result.length - 1].dateSelected) {
+      var result = this.plannerData.Unscheduled.filter(function(obj){return obj.name == selectedSession.name && obj.isAssigned == false}); //Find all sessions that belong to what has been chosen
+      var selectedResult = result[result.length - 1];
+      if (selectedResult.dateSelected == null) { //If the date is null dont add it and show error
+        alert("No date selected - Please choose a date that you want to complete your workout on.")
+      } else { 
+        switch (selectedResult.dateSelected) {
           case "Monday":
-          this.plannerData.Monday.push(result[result.length - 1]) //Push the latest one into the correct date
+            this.validateSessionAndAddSession(this.sessionLengths.Monday, this.plannerData.Monday, selectedResult)
             break;
-          case "Tuesday": 
-          this.plannerData.Tuesday.push(result[result.length - 1])
-          break;
+          case "Tuesday":
+            this.validateSessionAndAddSession(this.sessionLengths.Tuesday, this.plannerData.Tuesday, selectedResult)
+            break;
           case "Wednesday": 
-          this.plannerData.Wednesday.push(result[result.length - 1])
-          break;
+            this.validateSessionAndAddSession(this.sessionLengths.Wednesday, this.plannerData.Wednesday, selectedResult)
+            break;
           case "Thursday": 
-          this.plannerData.Thursday.push(result[result.length - 1])
-          break;
+            this.validateSessionAndAddSession(this.sessionLengths.Thursday, this.plannerData.Thursday, selectedResult)
+            break;
           case "Friday": 
-          this.plannerData.Friday.push(result[result.length - 1])
-          break;
+            this.validateSessionAndAddSession(this.sessionLengths.Friday, this.plannerData.Friday, selectedResult)
+            break;
           case "Saturday": 
-          this.plannerData.Saturday.push(result[result.length - 1])
-          break;
+            this.validateSessionAndAddSession(this.sessionLengths.Saturday, this.plannerData.Saturday, selectedResult)
+            break;
           case "Sunday": 
-          this.plannerData.Sunday.push(result[result.length - 1])
-          break;
+            this.validateSessionAndAddSession(this.sessionLengths.Sunday, this.plannerData.Sunday, selectedResult)
+            break;
         }
       }
-      
+    },
+    validateSessionAndAddSession(sessionLengthDate, plannerData, selectedResult) {
+      if ((parseInt(sessionLengthDate.reduce((partialSum, a) => partialSum + a, 0)) + selectedResult.length) <= 60) { //Calculate if the amount in the array is greater than expected 
+        sessionLengthDate.push(selectedResult.length)   
+        plannerData.push(selectedResult) //Push the latest one into the correct date
+        selectedResult.isAssigned = true; //Assign the latest session in the array based of the length of session that are unassigned
+      } else {
+        alert("Session length will be greater than 1 hour")
+      }
+    },
+    removeSession(cardSession) {
+      var plannerDataArray = Object.values(this.plannerData);
+      var UnscheduledPlannerDataArray = plannerDataArray[0]
+      for (let i = 1; i < plannerDataArray.length; i++) { //Loop through the dates to find which array to remove the session object from
+        if (plannerDataArray[i].includes(cardSession)) {
+          const indexOfObject = plannerDataArray[i].findIndex(object => {
+            return object.name === cardSession.name;
+          });
+          plannerDataArray[i].splice(indexOfObject, 1) //Once index has been found remove
+        }
+      }
 
+      var sessionLengthArray = Object.values(this.sessionLengths);
+      for (let j = 0; j < sessionLengthArray.length; j++) { //Loop through the dates to find which array to remove the session object from
+          const indexOfObject2 = sessionLengthArray[j].findIndex(object => {
+            return object.length === cardSession.length;
+          });
+          sessionLengthArray[j].splice(indexOfObject2, 1) //Once index has been found remove
+      }
+      //Find the object in unsceduled that is assigned and unassign it show it can show in the sessions list 
+      UnscheduledPlannerDataArray.find(x => x.name == cardSession.name && x.dateSelected == cardSession.dateSelected && x.isAssigned == true).isAssigned = false;
     }
   }
 }).mount('#app')

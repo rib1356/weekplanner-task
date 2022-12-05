@@ -54,7 +54,7 @@
 .session-cards-column {
     border-radius: 0px 10px 10px 0px;
     margin: 5px -1px 5px -1px;
-    min-height: 30px;
+    min-height: auto;
 }
 
 .session-text {
@@ -74,6 +74,12 @@
     margin-top: -5px;
 }
 
+.trash-icon {
+    float: right;
+    font-size: 30px;
+    margin-top: 1%;
+}
+
 @media screen and (max-width: 575px) {
     .selected-session-card {
         width: auto;
@@ -87,6 +93,10 @@
 
 /* At this width stack the divs so the session picker is on top with the weekly table below */
 @media screen and (max-width: 992px) {
+
+    .session-container {
+        margin-top: 5px;
+    }
 
     .weekday-grid-wrapper {
         display: inline;
@@ -109,6 +119,7 @@
         border-radius: 0px 0px 10px 10px;
         margin: -7px 0px 20px 0px;
         width: 100%;
+        min-height: 30px;
     }
 
     .session-text {
