@@ -1,6 +1,6 @@
 # Task Notes
 
-#### Inital Plans
+### Inital Plans
 - Create basic wireframe ✔️
 - Finalise wireframe ✔️
 - Create flow diagram
@@ -17,13 +17,13 @@
 - Finalise desktop design/styling
 - Create vueJS Cli project to build and then host on github pages?
 
-#### Amendments I would make
+### Amendments I would make
 - I would have installed VueJs through NPM but
   - Due to the requirements of this test needing to run from a simple html page I decided to import dependencies through the script tag
   - The advantage to this is it can be easily set up and implemented onto certain pages without having to change infrastructure
   - The disadvantage to this is you lose some functionality 
 
-#### Future Changes
+### Future Changes
 - Add saving for the weeks session
   - This could be done by writing to a new json file or overwriting the current data.json
   - Alternatively a simple database could be created (Either SQL or NoSQL) to store this information against a user
@@ -34,16 +34,16 @@
 - Write saved session to json file to be able to be loaded from?
 - Save session to firebase
 
-#### Inital Wireframes
-##### Mobile View
+## Inital Wireframes
+#### Mobile View
 ![](./TaskWireframes/InitialWireframeMobile.jpg)
-##### Desktop View
+#### Desktop View
 ![](./TaskWireframes/InitialWireframeDesktop.jpg)
 
 
-#### Finalised Wireframes
-##### Mobile View
-![](./TaskWireframes/WireframeMobile.jpg)
-##### Desktop View
-![](./TaskWireframes/WireframeDesktop.jpg)
+## Finalised Wireframes
+#### Mobile View
+![](./TaskWireframes/WireframeMobile.png)
+#### Desktop View
+![](./TaskWireframes/WireframeDesktop.png)
 #### Flow Diagrams
