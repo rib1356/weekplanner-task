@@ -1,61 +1,67 @@
 
 
 <html lang="en">
-<head>
-  <title>Training Schedule</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Vue / Bootstrap and any other depenancies I need-->
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="weekPlannerStyles.css">
-</head>
-
-<div id="app">
-  <div class="mx-3 my-2">
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-4 session-container">
-        <h2 style="text-align: center">Sessions</h2>
-        <div class="row"> <!-- Each of the session Cards is here-->
-          <div class="col-sm-12 col-md-12 col-lg-12 session-card-row">
-            <div v-for="session in plannerData.Unscheduled" :key="session.name">
-              <div class="card session-card" :style="{ backgroundColor: session.type_colour}" v-if="session.isAssigned == false">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px">{{session.name}}</h3>
-                      <h4 class="card-text">Type: {{session.type}}</h4>
-                      <p class="card-text">Length: {{session.length}} minutes</p>
-                      <!-- <p class="card-text">Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", -->
-                      </p>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <button type="button" class="btn btn-primary" style="width: 100%; margin-top:5px;" @click="viewExtraSessionDetails(session)">View Extra Details</button>
-                    </div>
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dateSelector" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%; margin-top:5px;">
-                          Choose Date
-                        </button>
-                        <ul class="dropdown-menu" style="width: 100%;">
-                          <li @click="sessionDateSelected('Monday', session)"><a class="dropdown-item">Monday</a></li>
-                          <li @click="sessionDateSelected('Tuesday', session)"><a class="dropdown-item">Tuesday</a></li>
-                          <li @click="sessionDateSelected('Wednesday', session)"><a class="dropdown-item">Wednesday</a></li>
-                          <li @click="sessionDateSelected('Thursday', session)"><a class="dropdown-item">Thursday</a></li>
-                          <li @click="sessionDateSelected('Friday', session)"><a class="dropdown-item">Friday</a></li>
-                          <li @click="sessionDateSelected('Saturday', session)"a class="dropdown-item">Saturday</a></li>
-                          <li @click="sessionDateSelected('Sunday', session)"><a class="dropdown-item">Sunday</a></li>
-                        </ul>
+  <head>
+    <title>Weekly Training Schedule</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧗</text></svg>">
+    <!-- Bootstrap and any other styling I need-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="weekPlannerStyles.css">
+  </head>
+  
+  <div id="app">
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="./assets/latticeLogo.png" alt="latticeLogo" width="50" height="50" style="margin-left:10px">
+          Week Planner
+        </a>
+      </div>
+    </nav>
+    <div class="mx-3 my-2">
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-4 session-container">
+          <h2 style="text-align: center">Sessions</h2>
+          <div class="row"> <!-- Each of the session Cards is here-->
+            <div class="col-sm-12 col-md-12 col-lg-12 session-card-row">
+              <div v-for="session in plannerData.Unscheduled" :key="session.name">
+                <div class="card session-card" :style="{ backgroundColor: session.type_colour}" v-if="session.isAssigned == false">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px">{{session.name}}</h3>
+                        <h4 class="card-text">Type: {{session.type}}</h4>
+                        <p class="card-text">Length: {{session.length}} minutes</p>
+                        <!-- <p class="card-text">Description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", -->
+                        </p>
                       </div>
                     </div>
-                    <div class="col-sm-4 col-md-4 col-lg-4">
-                      <button type="button" class="btn btn-success" style="width: 100%; margin-top:5px;" @click="addSession(session)">Add Session</button>
+                    <div class="row">
+                      <div class="col-sm-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btn-primary" style="width: 100%; margin-top:5px;" @click="viewExtraSessionDetails(session)">View Extra Details</button>
+                      </div>
+                      <div class="col-sm-4 col-md-4 col-lg-4">
+                        <div class="dropdown">
+                          <button class="btn btn-secondary dropdown-toggle" type="button" id="dateSelector" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%; margin-top:5px;">
+                            Choose Date
+                          </button>
+                          <ul class="dropdown-menu" style="width: 100%;">
+                            <li @click="sessionDateSelected('Monday', session)"><a class="dropdown-item">Monday</a></li>
+                            <li @click="sessionDateSelected('Tuesday', session)"><a class="dropdown-item">Tuesday</a></li>
+                            <li @click="sessionDateSelected('Wednesday', session)"><a class="dropdown-item">Wednesday</a></li>
+                            <li @click="sessionDateSelected('Thursday', session)"><a class="dropdown-item">Thursday</a></li>
+                            <li @click="sessionDateSelected('Friday', session)"><a class="dropdown-item">Friday</a></li>
+                            <li @click="sessionDateSelected('Saturday', session)"a class="dropdown-item">Saturday</a></li>
+                            <li @click="sessionDateSelected('Sunday', session)"><a class="dropdown-item">Sunday</a></li>
+                          </ul>
+                        </div>
+                      </div>
+                      <div class="col-sm-4 col-md-4 col-lg-4">
+                        <button type="button" class="btn btn-success" style="width: 100%; margin-top:5px;" @click="addSession(session)">Add Session</button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -63,171 +69,169 @@
             </div>
           </div>
         </div>
+        <div class="col-sm-12 col-md-12 col-lg-8 session-container">
+          <h2 class="session-text">Weekly Log</h2>
+          <div class="weekday-grid-wrapper"> <!-- Using Grid template here instead of bootstraps rows/cols-->
+            <div style="grid-column: 1; grid-row: 1; background-color: #F8A3A8;" class="weekday weekday-column">
+              <p class="weekday-text">Monday</p>
+              <p class="session-length-text" v-if="sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0)}} min </p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 1;" class="weekday session-cards-column" >
+              <div v-for="cardSession in plannerData.Monday"> <!-- This should be a component that gets the date passed in and means it only had to be changed in one place-->
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="grid-column: 1; grid-row: 2; background-color: #F3C6A5;" class="weekday weekday-column">
+              <p class="weekday-text">Tuesday</p>
+              <p class="session-length-text" v-if="sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 2;" class="weekday session-cards-column">
+              <div v-for="cardSession in plannerData.Tuesday">
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="grid-column: 1; grid-row: 3; background-color: #E5E1AB;" class="weekday weekday-column">
+              <p class="weekday-text">Wednesday</p>
+              <p class="session-length-text" v-if="sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 3;" class="weekday session-cards-column">
+              <div v-for="cardSession in plannerData.Wednesday">
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="grid-column: 1; grid-row: 4; background-color: #9CDCAA;" class="weekday weekday-column">
+              <p class="weekday-text">Thursday</p>
+              <p class="session-length-text" v-if="sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 4;" class="weekday session-cards-column">
+              <div v-for="cardSession in plannerData.Thursday">
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="grid-column: 1; grid-row: 5; background-color: 96CAF7;" class="weekday weekday-column">
+              <p class="weekday-text">Friday</p>
+              <p class="session-length-text" v-if="sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 5;" class="weekday session-cards-column">
+              <div v-for="cardSession in plannerData.Friday">
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="grid-column: 1; grid-row: 6; background-color: #BFB2F3;" class="weekday weekday-column">
+              <p class="weekday-text">Saturday</p>
+              <p class="session-length-text" v-if="sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 6;" class="weekday session-cards-column">
+              <div v-for="cardSession in plannerData.Saturday">
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div style="grid-column: 1; grid-row: 7; background-color: #97C1A9;" class="weekday weekday-column">
+              <p class="weekday-text">Sunday</p>     
+              <p class="session-length-text" v-if="sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
+              <p class="session-length-text" v-else>No Sessions</p>
+            </div>
+            <div style="grid-column: 2; grid-row: 7;" class="weekday session-cards-column">
+              <div v-for="cardSession in plannerData.Sunday">
+                <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
+                        <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
+                        <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                        <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
+                        <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
+                        <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>  
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-8 session-container">
-        <h2 class="session-text">Weekly Log</h2>
-        <div class="weekday-grid-wrapper"> <!-- Using Grid template here instead of bootstraps rows/cols-->
-          <div style="grid-column: 1; grid-row: 1; background-color: #F8A3A8;" class="weekday weekday-column">
-            <p class="weekday-text">Monday</p>
-            <p class="session-length-text" v-if="sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0)}} min </p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 1;" class="weekday session-cards-column" >
-            <div v-for="cardSession in plannerData.Monday"> <!-- This should be a component that gets the date passed in and means it only had to be changed in one place-->
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="grid-column: 1; grid-row: 2; background-color: #F3C6A5;" class="weekday weekday-column">
-            <p class="weekday-text">Tuesday</p>
-            <p class="session-length-text" v-if="sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 2;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Tuesday">
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="grid-column: 1; grid-row: 3; background-color: #E5E1AB;" class="weekday weekday-column">
-            <p class="weekday-text">Wednesday</p>
-            <p class="session-length-text" v-if="sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 3;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Wednesday">
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="grid-column: 1; grid-row: 4; background-color: #9CDCAA;" class="weekday weekday-column">
-            <p class="weekday-text">Thursday</p>
-            <p class="session-length-text" v-if="sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 4;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Thursday">
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="grid-column: 1; grid-row: 5; background-color: 96CAF7;" class="weekday weekday-column">
-            <p class="weekday-text">Friday</p>
-            <p class="session-length-text" v-if="sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 5;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Friday">
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="grid-column: 1; grid-row: 6; background-color: #BFB2F3;" class="weekday weekday-column">
-            <p class="weekday-text">Saturday</p>
-            <p class="session-length-text" v-if="sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 6;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Saturday">
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="grid-column: 1; grid-row: 7; background-color: #97C1A9;" class="weekday weekday-column">
-            <p class="weekday-text">Sunday</p>
-            <p class="session-length-text" v-if="sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
-            <p class="session-length-text" v-else>No Sessions</p>
-          </div>
-          <div style="grid-column: 2; grid-row: 7;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Sunday">
-              <div class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: 100px;">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Type: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
-                      <p class="card-text">Length: <strong>{{cardSession.length}} minutes</strong></p>
-                      <p class="card-text">Intensity: <strong>{{cardSession.target_intensity}}</strong> Fatigue: <strong>{{cardSession.target_fatigue}}</strong></p>
-                      <p class="card-text" v-if="cardSession.variation != null">Variation: <strong>{{cardSession.variation}}</strong></p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>  
     </div>
-  </div>
-  
+    
     <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="extraSessionDetailModal">
-      <div>
       <div class="modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
@@ -278,281 +282,315 @@
       </div>
     </div>
   </div>
-</div>
-
-<script>
-const { createApp } = Vue
-
-createApp({
-  data() {
-    return {
-      count: 0,
-      toShow: true,
-      plannerData: {},
-      sessionTypes: [],
-      selectedSession: {},
-      sessionLengths: { //Object of arrays to calculate session lengths
-        "Monday": [],
-        "Tuesday": [],
-        "Wednesday": [],
-        "Thursday": [],
-        "Friday": [],
-        "Saturday": [],
-        "Sunday": [],
+  
+  <script src="https://unpkg.com/vuejs-datepicker"></script>
+  <!--<script src="https://unpkg.com/vue"></script>
+   <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script type="module" src="test.js"></script>
+  
+  <script>
+  const app = new Vue({
+    el: '#app',
+    components: {
+      vuejsDatepicker,
+    },
+    data() {
+      return {
+        count: 0,
+        toShow: true,
+        plannerData: {},
+        sessionTypes: [],
+        selectedSession: {},
+        sessionLengths: { //Object of arrays to calculate session lengths
+          "Monday": [],
+          "Tuesday": [],
+          "Wednesday": [],
+          "Thursday": [],
+          "Friday": [],
+          "Saturday": [],
+          "Sunday": [],
+        },
+        mondayLength: 0,
+      }
+    },
+    mounted() {
+      console.log("mounted")
+      //Unable to read the data locally from json opening from just a HTML file due to security?
+      //Running through a local server should be easy enough to read and then assign to variable
+      //Could host json file somewhere and make an ajax query to it.
+  
+      // $.getJSON("data.json", function(json) {
+      //   console.log(json)
+      // });
+  
+      this.plannerData = {
+        "Unscheduled": [
+          {
+              "name": "Max Hangs",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Strength and Power",
+              "type_colour": "#ff968a",
+              "length": 20,
+              "target_intensity": 9,
+              "target_fatigue": 4,
+              "variation": "Four finger Half Crimp"
+          },
+          {
+              "name": "Max Hangs",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Strength and Power",
+              "type_colour": "#ff968a",
+              "length": 20,
+              "target_intensity": 9,
+              "target_fatigue": 4,
+              "variation": "Four finger Half Crimp"
+          },
+          {
+              "name": "1 on 1 off",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Endurance",
+              "type_colour": "#a7bed3",
+              "length": 20,
+              "target_intensity": 4,
+              "target_fatigue": 4,
+              "variation": null
+          },
+          {
+              "name": "1 on 1 off",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Endurance",
+              "type_colour": "#a7bed3",
+              "length": 20,
+              "target_intensity": 4,
+              "target_fatigue": 4,
+              "variation": null
+          },
+          {
+              "name": "Regen",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Endurance",
+              "type_colour": "#a7bed3",
+              "length": 20,
+              "target_intensity": 2,
+              "target_fatigue": 3,
+              "variation": null
+          },
+          {
+              "name": "Regen",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Endurance",
+              "type_colour": "#a7bed3",
+              "length": 20,
+              "target_intensity": 2,
+              "target_fatigue": 4,
+              "variation": null
+          },
+          {
+              "name": "4 x 4",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Power Endurance",
+              "type_colour": "#97c1a9",
+              "length": 60,
+              "target_intensity": 8,
+              "target_fatigue": 8,
+              "variation": null
+          },
+          {
+              "name": "4 x 4",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Power Endurance",
+              "type_colour": "#97c1a9",
+              "length": 60,
+              "target_intensity": 7,
+              "target_fatigue": 8,
+              "variation": null
+          },
+          {
+              "name": "Press Ups",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Conditioning",
+              "type_colour": "#ffffb5",
+              "length": 25,
+              "target_intensity": 6,
+              "target_fatigue": 5,
+              "variation": null
+          },
+          {
+              "name": "Press Ups",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Conditioning",
+              "type_colour": "#ffffb5",
+              "length": 25,
+              "target_intensity": 6,
+              "target_fatigue": 5,
+              "variation": null
+          },
+          {
+              "name": "Yoga",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Flexibility",
+              "type_colour": "#b28dff",
+              "length": 20,
+              "target_intensity": 3,
+              "target_fatigue": 2,
+              "variation": null
+          },
+          {
+              "name": "Yoga",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Flexibility",
+              "type_colour": "#b28dff",
+              "length": 20,
+              "target_intensity": 3,
+              "target_fatigue": 2,
+              "variation": null
+          },
+          {
+              "name": "Yoga",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Flexibility",
+              "type_colour": "#b28dff",
+              "length": 20,
+              "target_intensity": 3,
+              "target_fatigue": 2,
+              "variation": null
+          },
+          {
+              "name": "Yoga",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Flexibility",
+              "type_colour": "#b28dff",
+              "length": 20,
+              "target_intensity": 3,
+              "target_fatigue": 2,
+              "variation": null
+          },
+          {
+              "name": "Yoga",
+              "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+              "type": "Flexibility",
+              "type_colour": "#b28dff",
+              "length": 20,
+              "target_intensity": 3,
+              "target_fatigue": 2,
+              "variation": null
+          }
+          ],
+          "Monday": [],
+          "Tuesday": [],
+          "Wednesday": [],
+          "Thursday": [],
+          "Friday": [],
+          "Saturday": [],
+          "Sunday": []
+        }
+      for(i = 0; i < this.plannerData.Unscheduled.length; i++) {
+        this.plannerData.Unscheduled[i].isAssigned = false;
+        this.plannerData.Unscheduled[i].dateSelected = null;
+      }
+    },
+    methods: {
+      sessionDateSelected(dateSelected, selectedSession) {
+        var result  = this.plannerData.Unscheduled.filter(function(obj){return obj.name == selectedSession.name && obj.isAssigned == false}); //Find all sessions that belong to what has been chosen
+        result[result.length - 1].dateSelected = dateSelected; //Assign the latest session in the array based of the length of session that are unassigned 
       },
-      mondayLength: 0,
-    }
-  },
-  mounted() {
-    console.log("mounted")
-    //Unable to read the data locally from json opening from just a HTML file due to security?
-    //Running through a local server should be easy enough to read and then assign to variable
-    //Could host json file somewhere and make an ajax query to it.
-
-    // $.getJSON("data.json", function(json) {
-    //   console.log(json)
-    // });
-
-    this.plannerData = {
-      "Unscheduled": [
-        {
-            "name": "Max Hangs",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Strength and Power",
-            "type_colour": "#ff968a",
-            "length": 20,
-            "target_intensity": 9,
-            "target_fatigue": 4,
-            "variation": "Four finger Half Crimp"
-        },
-        {
-            "name": "Max Hangs",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Strength and Power",
-            "type_colour": "#ff968a",
-            "length": 20,
-            "target_intensity": 9,
-            "target_fatigue": 4,
-            "variation": "Four finger Half Crimp"
-        },
-        {
-            "name": "1 on 1 off",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Endurance",
-            "type_colour": "#a7bed3",
-            "length": 20,
-            "target_intensity": 4,
-            "target_fatigue": 4,
-            "variation": null
-        },
-        {
-            "name": "1 on 1 off",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Endurance",
-            "type_colour": "#a7bed3",
-            "length": 20,
-            "target_intensity": 4,
-            "target_fatigue": 4,
-            "variation": null
-        },
-        {
-            "name": "Regen",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Endurance",
-            "type_colour": "#a7bed3",
-            "length": 20,
-            "target_intensity": 2,
-            "target_fatigue": 3,
-            "variation": null
-        },
-        {
-            "name": "Regen",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Endurance",
-            "type_colour": "#a7bed3",
-            "length": 20,
-            "target_intensity": 2,
-            "target_fatigue": 4,
-            "variation": null
-        },
-        {
-            "name": "4 x 4",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Power Endurance",
-            "type_colour": "#97c1a9",
-            "length": 60,
-            "target_intensity": 8,
-            "target_fatigue": 8,
-            "variation": null
-        },
-        {
-            "name": "4 x 4",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Power Endurance",
-            "type_colour": "#97c1a9",
-            "length": 60,
-            "target_intensity": 7,
-            "target_fatigue": 8,
-            "variation": null
-        },
-        {
-            "name": "Press Ups",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Conditioning",
-            "type_colour": "#ffffb5",
-            "length": 25,
-            "target_intensity": 6,
-            "target_fatigue": 5,
-            "variation": null
-        },
-        {
-            "name": "Press Ups",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Conditioning",
-            "type_colour": "#ffffb5",
-            "length": 25,
-            "target_intensity": 6,
-            "target_fatigue": 5,
-            "variation": null
-        },
-        {
-            "name": "Yoga",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Flexibility",
-            "type_colour": "#b28dff",
-            "length": 20,
-            "target_intensity": 3,
-            "target_fatigue": 2,
-            "variation": null
-        },
-        {
-            "name": "Yoga",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Flexibility",
-            "type_colour": "#b28dff",
-            "length": 20,
-            "target_intensity": 3,
-            "target_fatigue": 2,
-            "variation": null
-        },
-        {
-            "name": "Yoga",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Flexibility",
-            "type_colour": "#b28dff",
-            "length": 20,
-            "target_intensity": 3,
-            "target_fatigue": 2,
-            "variation": null
-        },
-        {
-            "name": "Yoga",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Flexibility",
-            "type_colour": "#b28dff",
-            "length": 20,
-            "target_intensity": 3,
-            "target_fatigue": 2,
-            "variation": null
-        },
-        {
-            "name": "Yoga",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            "type": "Flexibility",
-            "type_colour": "#b28dff",
-            "length": 20,
-            "target_intensity": 3,
-            "target_fatigue": 2,
-            "variation": null
+      viewExtraSessionDetails(session) {
+        this.selectedSession = session
+        $('#extraSessionDetailModal').show();
+      },
+      closeSessionDetailModal() {
+        $('#extraSessionDetailModal').hide();
+      },
+      addSession(selectedSession) {
+        var result = this.plannerData.Unscheduled.filter(function(obj){return obj.name == selectedSession.name && obj.isAssigned == false}); //Find all sessions that belong to what has been chosen
+        var selectedResult = result[result.length - 1];
+        if (selectedResult.dateSelected == null) { //If the date is null dont add it and show error
+          alert("No date selected - Please choose a date that you want to complete your workout on.")
+        } else { 
+          switch (selectedResult.dateSelected) {
+            case "Monday":
+              this.validateSessionAndAddSession(this.sessionLengths.Monday, this.plannerData.Monday, selectedResult)
+              break;
+            case "Tuesday":
+              this.validateSessionAndAddSession(this.sessionLengths.Tuesday, this.plannerData.Tuesday, selectedResult)
+              break;
+            case "Wednesday": 
+              this.validateSessionAndAddSession(this.sessionLengths.Wednesday, this.plannerData.Wednesday, selectedResult)
+              break;
+            case "Thursday": 
+              this.validateSessionAndAddSession(this.sessionLengths.Thursday, this.plannerData.Thursday, selectedResult)
+              break;
+            case "Friday": 
+              this.validateSessionAndAddSession(this.sessionLengths.Friday, this.plannerData.Friday, selectedResult)
+              break;
+            case "Saturday": 
+              this.validateSessionAndAddSession(this.sessionLengths.Saturday, this.plannerData.Saturday, selectedResult)
+              break;
+            case "Sunday": 
+              this.validateSessionAndAddSession(this.sessionLengths.Sunday, this.plannerData.Sunday, selectedResult)
+              break;
+          }
         }
-        ],
-        "Monday": [],
-        "Tuesday": [],
-        "Wednesday": [],
-        "Thursday": [],
-        "Friday": [],
-        "Saturday": [],
-        "Sunday": []
-      }
-    for(i = 0; i < this.plannerData.Unscheduled.length; i++) {
-      this.plannerData.Unscheduled[i].isAssigned = false;
-      this.plannerData.Unscheduled[i].dateSelected = null;
-    }
-  },
-  methods: {
-    sessionDateSelected(dateSelected, selectedSession) {
-      var result  = this.plannerData.Unscheduled.filter(function(obj){return obj.name == selectedSession.name && obj.isAssigned == false}); //Find all sessions that belong to what has been chosen
-      result[result.length - 1].dateSelected = dateSelected; //Assign the latest session in the array based of the length of session that are unassigned 
-    },
-    viewExtraSessionDetails(session) {
-      this.selectedSession = session
-      $('#extraSessionDetailModal').show();
-    },
-    closeSessionDetailModal() {
-      $('#extraSessionDetailModal').hide();
-    },
-    addSession(selectedSession) {
-      var result = this.plannerData.Unscheduled.filter(function(obj){return obj.name == selectedSession.name && obj.isAssigned == false}); //Find all sessions that belong to what has been chosen
-      var selectedResult = result[result.length - 1];
-      if (selectedResult.dateSelected == null) { //If the date is null dont add it and show error
-        alert("No date selected - Please choose a date that you want to complete your workout on.")
-      } else { 
-        switch (selectedResult.dateSelected) {
+      },
+      validateSessionAndAddSession(sessionLengthDate, plannerData, selectedResult) {
+        if ((parseInt(sessionLengthDate.reduce((partialSum, a) => partialSum + a, 0)) + selectedResult.length) <= 60) { //Calculate if the amount in the array is greater than expected 
+          sessionLengthDate.push(selectedResult.length)   
+          plannerData.push(selectedResult) //Push the latest one into the correct date
+          selectedResult.isAssigned = true; //Assign the latest session in the array based of the length of session that are unassigned
+        } else {
+          alert("Session length will be greater than 1 hour")
+        }
+      },
+      removeSession(cardSession) {
+        var plannerDataArray = Object.values(this.plannerData);
+        var UnscheduledPlannerDataArray = plannerDataArray[0]
+        for (let i = 1; i < plannerDataArray.length; i++) { //Loop through the dates to find which array to remove the session object from
+          if (plannerDataArray[i].includes(cardSession)) {
+            const indexOfObject = plannerDataArray[i].findIndex(object => {
+              return object.name === cardSession.name;
+            });
+            plannerDataArray[i].splice(indexOfObject, 1) //Once index has been found remove
+          }
+        }
+  
+        //Remove the session time and recalculate
+        var sessionLengthArray = Object.values(this.sessionLengths);
+        var lengthToRemoveFrom = null;
+        switch(cardSession.dateSelected) { //Get the session time array based on date
           case "Monday":
-            this.validateSessionAndAddSession(this.sessionLengths.Monday, this.plannerData.Monday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[0]
+              break;
           case "Tuesday":
-            this.validateSessionAndAddSession(this.sessionLengths.Tuesday, this.plannerData.Tuesday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[1]
+              break;
           case "Wednesday": 
-            this.validateSessionAndAddSession(this.sessionLengths.Wednesday, this.plannerData.Wednesday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[2]
+              break;
           case "Thursday": 
-            this.validateSessionAndAddSession(this.sessionLengths.Thursday, this.plannerData.Thursday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[3]  
+              break;
           case "Friday": 
-            this.validateSessionAndAddSession(this.sessionLengths.Friday, this.plannerData.Friday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[4] 
+              break;
           case "Saturday": 
-            this.validateSessionAndAddSession(this.sessionLengths.Saturday, this.plannerData.Saturday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[5]
+              break;
           case "Sunday": 
-            this.validateSessionAndAddSession(this.sessionLengths.Sunday, this.plannerData.Sunday, selectedResult)
-            break;
+              lengthToRemoveFrom = sessionLengthArray[6]
+              break;
         }
+        const indexOfObject2 = lengthToRemoveFrom.findIndex(object => {
+          return object === cardSession.length; //object eg: 25
+        });
+        lengthToRemoveFrom.splice(indexOfObject2, 1) //Find the index in the array where the lengths match and remove
+        
+        //Find the object in unsceduled that is assigned and unassign it show it can show in the sessions list 
+        UnscheduledPlannerDataArray.find(x => x.name == cardSession.name && x.dateSelected == cardSession.dateSelected && x.isAssigned == true).isAssigned = false;
       }
-    },
-    validateSessionAndAddSession(sessionLengthDate, plannerData, selectedResult) {
-      if ((parseInt(sessionLengthDate.reduce((partialSum, a) => partialSum + a, 0)) + selectedResult.length) <= 60) { //Calculate if the amount in the array is greater than expected 
-        sessionLengthDate.push(selectedResult.length)   
-        plannerData.push(selectedResult) //Push the latest one into the correct date
-        selectedResult.isAssigned = true; //Assign the latest session in the array based of the length of session that are unassigned
-      } else {
-        alert("Session length will be greater than 1 hour")
-      }
-    },
-    removeSession(cardSession) {
-      var plannerDataArray = Object.values(this.plannerData);
-      var UnscheduledPlannerDataArray = plannerDataArray[0]
-      for (let i = 1; i < plannerDataArray.length; i++) { //Loop through the dates to find which array to remove the session object from
-        if (plannerDataArray[i].includes(cardSession)) {
-          const indexOfObject = plannerDataArray[i].findIndex(object => {
-            return object.name === cardSession.name;
-          });
-          plannerDataArray[i].splice(indexOfObject, 1) //Once index has been found remove
-        }
-      }
-
-      var sessionLengthArray = Object.values(this.sessionLengths);
-      for (let j = 0; j < sessionLengthArray.length; j++) { //Loop through the dates to find which array to remove the session object from
-          const indexOfObject2 = sessionLengthArray[j].findIndex(object => {
-            return object.length === cardSession.length;
-          });
-          sessionLengthArray[j].splice(indexOfObject2, 1) //Once index has been found remove
-      }
-      //Find the object in unsceduled that is assigned and unassign it show it can show in the sessions list 
-      UnscheduledPlannerDataArray.find(x => x.name == cardSession.name && x.dateSelected == cardSession.dateSelected && x.isAssigned == true).isAssigned = false;
     }
-  }
-}).mount('#app')
-</script>
+  })
+  
+  </script>
