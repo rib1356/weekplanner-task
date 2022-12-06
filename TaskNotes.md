@@ -31,16 +31,19 @@
   - The ability to drag and drop sessions from the left column onto the table to add a session
   - Add notes to each of the sessions or days
   - History view of previous weeks sessions completed
-- Write saved session to json file to be able to be loaded from? 
+- Write saved session to json file to be able to be loaded from?
+- Save session to firebase
 
 #### Inital Wireframes
 ##### Mobile View
-
+![](./TaskWireframes/InitialWireframeMobile.jpg)
 ##### Desktop View
+![](./TaskWireframes/InitialWireframeDesktop.jpg)
+
 
 #### Finalised Wireframes
 ##### Mobile View
-
+![](./TaskWireframes/WireframeMobile.jpg)
 ##### Desktop View
-
+![](./TaskWireframes/WireframeDesktop.jpg)
 #### Flow Diagrams
