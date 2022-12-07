@@ -21,10 +21,21 @@
     border: 2px solid black ;
     margin: 5px;
     width: 48%;
+    display: inline-block;
 }
 
 .card-text {
-    margin-bottom: 0px;
+    margin-bottom: 5px;
+}
+
+.icon-card-text {
+    display: inline;
+    margin-right: 5px;
+    font-weight: bold;
+}
+
+.card-icons {
+    font-size: 35px;
 }
 
 .modal-title {
@@ -80,16 +91,60 @@
     margin-top: 1%;
 }
 
+.bi-person-circle {
+    color: white;
+    font-size: 35px;
+    display: block;
+    float: right;
+    padding-left: 15px;
+}
+/* 
+.date-picker .input{
+    margin-top: 5px;
+    border: 2px solid black;
+    border-radius: 7px;
+    width: 100%;
+    height: 38px;
+} */
+
+input,
+select {
+    font-size: 100%;
+    border: 1px solid #ccc;
+    width: 100%;
+    margin-top: 5px !important;
+    border: 2px solid black;
+    border-radius: 7px;
+    width: 100%;
+    height: 38px;
+}
+
 @media screen and (max-width: 575px) {
     .selected-session-card {
-        width: auto;
+        width: 98%;
     }
 
 }
 
-/* @media screen and (max-width: 475px) {
+@media screen and (max-width: 475px) {
+    .card-icons {
+        font-size: 25px;
+    }
 
-} */
+    .icon-card-text {
+        margin-right: 0px;
+    }
+}
+
+@media screen and (max-width: 376px) {
+    .card-icons {
+        font-size: 20px;
+    }
+
+    .icon-card-text {
+        margin-right: 0px;
+    }
+}
 
 /* At this width stack the divs so the session picker is on top with the weekly table below */
 @media screen and (max-width: 992px) {
