@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="weekPlannerStyles.css">
 </head>
 
+<body class="page-background">
 <div id="app">
   <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
@@ -30,7 +31,7 @@
   <div class="mx-3 my-2">
     <div class="row">
       <div class="col-sm-12 col-md-12 col-lg-4 session-container">
-        <h2 style="text-align: center">Sessions</h2>
+        <h2 class="session-text">Sessions</h2>
         <div class="row"> <!-- Each of the session Cards is here-->
           <div class="col-sm-12 col-md-12 col-lg-12 session-card-row">
             <div v-for="(session, index) in plannerData.Unscheduled" :key="session.name">
@@ -38,7 +39,7 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-12 col-md-12 col-lg-12">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px">{{session.name}} {{index}}</h3>
+                      <h3 class="card-title">{{session.name}}</h3>
                       <h4 class="card-text">Type: {{session.type}}</h4>
                       <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{session.length}} min</p>
                       <p class="icon-card-text"> | Intensity: {{session.target_intensity}} 
@@ -58,31 +59,16 @@
                   </div>
                   <div class="row">
                     <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4">
-                      <button type="button" class="btn btn-primary" style="width: 100%; margin-top:5px;" @click="viewExtraSessionDetails(session)">Details</button>
+                      <button type="button" class="btn btn-primary card-button" @click="viewExtraSessionDetails(session)">Details</button>
                     </div>
                     <div class="col-sm-6 col-md-4 col-lg-4">
-                      
                       <vuejs-datepicker :minimumView="'day'" :maximumView="'day'" 
                                         placeholder="Select Session Date" 
                                         :highlighted="state.highlighted" :disabled-dates="state2.disabled"
                                         v-bind:id="index"></vuejs-datepicker>
-                      <!-- <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dateSelector" data-bs-toggle="dropdown" aria-expanded="false" style="width: 100%; margin-top:5px;">
-                          Choose Date
-                        </button>
-                        <ul class="dropdown-menu" style="width: 100%;">
-                          <li @click="sessionDateSelected('Monday', session)"><a class="dropdown-item">Monday</a></li>
-                          <li @click="sessionDateSelected('Tuesday', session)"><a class="dropdown-item">Tuesday</a></li>
-                          <li @click="sessionDateSelected('Wednesday', session)"><a class="dropdown-item">Wednesday</a></li>
-                          <li @click="sessionDateSelected('Thursday', session)"><a class="dropdown-item">Thursday</a></li>
-                          <li @click="sessionDateSelected('Friday', session)"><a class="dropdown-item">Friday</a></li>
-                          <li @click="sessionDateSelected('Saturday', session)"a class="dropdown-item">Saturday</a></li>
-                          <li @click="sessionDateSelected('Sunday', session)"><a class="dropdown-item">Sunday</a></li>
-                        </ul>
-                      </div> -->
                     </div>
                     <div class="col-sm-3 col-md-4 col-lg-4">
-                      <button type="button" class="btn btn-success" style="width: 100%; margin-top:5px;" @click="addSession(session, index)">Add Session</button>
+                      <button type="button" class="btn btn-success card-button" @click="addSession(session, index)">Add Session</button>
                     </div>
                   </div>
                 </div>
@@ -94,18 +80,18 @@
       <div class="col-sm-12 col-md-12 col-lg-8 session-container">
         <h2 class="session-text">Weekly Log</h2>
         <div class="weekday-grid-wrapper"> <!-- Using Grid template here instead of bootstraps rows/cols-->
-          <div style="grid-column: 1; grid-row: 1; background-color: #F8A3A8;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 1;" class="weekday weekday-column">
             <p class="weekday-text">Monday</p>
             <p class="session-length-text" v-if="sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Monday.reduce((partialSum, a) => partialSum + a, 0)}} min </p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 1;" class="weekday session-cards-column" >
-              <div v-for="cardSession in plannerData.Monday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+              <div v-for="cardSession in plannerData.Monday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content"> <!-- Will be components-->
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                    <div class="col-sm-12 col-md-12 col-lg-12 card-session-col"> <!-- Will be components-->
+                      <h3 class="card-title"></h3>
+                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Monday')"></i></h4>
                       <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                       <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                         <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -126,18 +112,18 @@
 
             </div>
           </div>
-          <div style="grid-column: 1; grid-row: 2; background-color: #F3C6A5;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 2;" class="weekday weekday-column">
             <p class="weekday-text">Tuesday</p>
             <p class="session-length-text" v-if="sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Tuesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 2;" class="weekday session-cards-column">
-            <div v-for="cardSession in plannerData.Tuesday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+            <div v-for="cardSession in plannerData.Tuesday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content">
-                    <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                    <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                  <div class="col-sm-12 col-md-12 col-lg-12 card-session-col">
+                    <h3 class="card-title"></h3>
+                    <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Tuesday')"></i></h4>
                     <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                     <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                       <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -157,18 +143,18 @@
               </div>
             </div>
           </div>
-          <div style="grid-column: 1; grid-row: 3; background-color: #E5E1AB;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 3;" class="weekday weekday-column">
             <p class="weekday-text">Wednesday</p>
             <p class="session-length-text" v-if="sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Wednesday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 3;" class="weekday session-cards-column">
-              <div v-for="cardSession in plannerData.Wednesday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+              <div v-for="cardSession in plannerData.Wednesday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                    <div class="col-sm-12 col-md-12 col-lg-12 card-session-col">
+                      <h3 class="card-title"></h3>
+                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Wednesday')"></i></h4>
                       <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                       <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                         <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -188,18 +174,18 @@
                 </div>
               </div>
           </div>
-          <div style="grid-column: 1; grid-row: 4; background-color: #9CDCAA;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 4;" class="weekday weekday-column">
             <p class="weekday-text">Thursday</p>
             <p class="session-length-text" v-if="sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Thursday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 4;" class="weekday session-cards-column">
-              <div v-for="cardSession in plannerData.Thursday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+              <div v-for="cardSession in plannerData.Thursday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                    <div class="col-sm-12 col-md-12 col-lg-12 card-session-col">
+                      <h3 class="card-title"></h3>
+                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Thursday')"></i></h4>
                       <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                       <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                         <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -219,18 +205,18 @@
                 </div>
               </div>
           </div>
-          <div style="grid-column: 1; grid-row: 5; background-color: 96CAF7;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 5;" class="weekday weekday-column">
             <p class="weekday-text">Friday</p>
             <p class="session-length-text" v-if="sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Friday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 5;" class="weekday session-cards-column">
-              <div v-for="cardSession in plannerData.Friday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+              <div v-for="cardSession in plannerData.Friday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content">
-                      <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                    <div class="col-sm-12 col-md-12 col-lg-12 card-session-col">
+                      <h3 class="card-title"></h3>
+                      <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Friday')"></i></h4>
                       <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                       <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                         <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -250,17 +236,17 @@
                 </div>
               </div>
           </div>
-          <div style="grid-column: 1; grid-row: 6; background-color: #BFB2F3;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 6;" class="weekday weekday-column">
             <p class="weekday-text">Saturday</p>
             <p class="session-length-text" v-if="sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Saturday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 6;" class="weekday session-cards-column">
-              <div v-for="cardSession in plannerData.Saturday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+              <div v-for="cardSession in plannerData.Saturday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
                 <div class="card-body">
-                  <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content">
-                    <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                    <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                  <div class="col-sm-12 col-md-12 col-lg-12 card-session-col">
+                    <h3 class="card-title"></h3>
+                    <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Saturday')"></i></h4>
                     <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                     <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                       <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -279,17 +265,17 @@
                 </div>
               </div>
           </div>
-          <div style="grid-column: 1; grid-row: 7; background-color: #97C1A9;" class="weekday weekday-column">
+          <div style="grid-column: 1; grid-row: 7;" class="weekday weekday-column">
             <p class="weekday-text">Sunday</p>     
             <p class="session-length-text" v-if="sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0) > 0">Session Length: {{sessionLengths.Sunday.reduce((partialSum, a) => partialSum + a, 0)}} min</p>
             <p class="session-length-text" v-else>No Sessions</p>
           </div>
           <div style="grid-column: 2; grid-row: 7;" class="weekday session-cards-column">
-              <div v-for="cardSession in plannerData.Sunday" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
+              <div v-for="cardSession in plannerData.Sunday" :key="cardSession.name" class="card selected-session-card" :style="{ backgroundColor: cardSession.type_colour}">
                 <div class="card-body">
-                  <div class="col-sm-12 col-md-12 col-lg-12" style="height: fit-content">
-                    <h3 class="card-title" style="font-weight:bold; margin-bottom: 0px"></h3>
-                    <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession)"></i></h4>
+                  <div class="col-sm-12 col-md-12 col-lg-12 card-session-col">
+                    <h3 class="card-title"></h3>
+                    <h4 class="card-text">Name: {{cardSession.name}} <i class="bi bi-trash3-fill trash-icon" @click="removeSession(cardSession, 'Sunday')"></i></h4>
                     <p class="icon-card-text"><i class="bi bi-stopwatch card-icons"></i> {{cardSession.length}} min</p>
                     <p class="icon-card-text"> | Intensity: {{cardSession.target_intensity}} 
                       <i v-if="cardSession.target_intensity >= 8" class="bi bi-reception-4 card-icons"></i>
@@ -311,7 +297,7 @@
         </div>
       </div>  
     </div>
-  </div>
+
   
   <div class="modal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" id="extraSessionDetailModal">
     <div class="modal-dialog modal-dialog-scrollable">
@@ -364,10 +350,8 @@
     </div>
   </div>
 </div>
-
+</body>
 <script src="https://unpkg.com/vuejs-datepicker"></script>
-<!--<script src="https://unpkg.com/vue"></script>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2.7.14/dist/vue.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
@@ -426,11 +410,9 @@ const app = new Vue({
   }
   },
   mounted() {
-    console.log("mounted")
-  
     //Unable to read the data locally from json opening from just a HTML file due to security?
     //Running through a local server should be easy enough to read and then assign to variable
-    //Could host json file somewhere and make an ajax query to it.
+    //Could host json file somewhere and make an ajax query to it?
 
     // $.getJSON("data.json", function(json) {
     //   console.log(json)
@@ -661,7 +643,7 @@ const app = new Vue({
         alert("Session length will be greater than 1 hour")
       }
     },
-    removeSession(cardSession) {
+    removeSession(cardSession, dayOfWeekToRemove) {
       var plannerDataArray = Object.values(this.plannerData);
       var UnscheduledPlannerDataArray = plannerDataArray[0]
       for (let i = 1; i < plannerDataArray.length; i++) { //Loop through the dates to find which array to remove the session object from
@@ -672,11 +654,10 @@ const app = new Vue({
           plannerDataArray[i].splice(indexOfObject, 1) //Once index has been found remove
         }
       }
-
       //Remove the session time and recalculate
       var sessionLengthArray = Object.values(this.sessionLengths);
       var lengthToRemoveFrom = null;
-      switch(cardSession.dateSelected) { //Get the session time array based on date
+      switch(dayOfWeekToRemove) { //Get the session time array based on date
         case "Monday":
             lengthToRemoveFrom = sessionLengthArray[0]
             break;

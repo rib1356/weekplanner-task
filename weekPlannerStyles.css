@@ -1,6 +1,21 @@
+/* Red: #c92405 | Yellow: #f7d229 | Blue: #2f7dad*/
+
+.page-background {
+    /* background-color: #14bcce; */
+    background-color: #212322;
+    /* background-color: #3182a9; */
+}
+
+.navbar {
+    border-bottom: 2px solid white;
+    height: 70px;
+}
+
 .session-container {
-    border: solid 2px #212529;
+    border: solid 3px #212322;
     border-radius: 20px;
+    background-color: #227dab;
+    height: fit-content;
 }
 
 .session-card-row { 
@@ -11,21 +26,35 @@
 .session-card {
     --bs-card-spacer-y: 0.2rem;
     --bs-card-spacer-x: 0.5rem;
-    border: 2px solid black ;
+    border: 3px solid #212322 ;
     margin-bottom: 5px;
 }
 
 .selected-session-card {
     --bs-card-spacer-y: 0.2rem;
     --bs-card-spacer-x: 0.5rem;
-    border: 2px solid black ;
+    border: 2px solid #212322 ;
     margin: 5px;
     width: 48%;
     display: inline-block;
 }
 
 .card-text {
-    margin-bottom: 5px;
+    margin-bottom: 0px;
+}
+
+.card-title {
+    font-weight:bold; 
+    margin-bottom: 0px
+}
+
+.card-button {
+    width: 100%; 
+    margin-top:5px;
+}
+
+.card-session-col {
+    height: fit-content;
 }
 
 .icon-card-text {
@@ -46,20 +75,28 @@
     background-color: red;
 }
 
-.weekday-grid-wrapper {
+.session-wrapper {
     display: grid; 
     grid-template-columns: 20% 80%; 
     height: 80vh;
 }
 
+.weekday-grid-wrapper {
+    display: grid; 
+    grid-template-columns: 20% 80%; 
+    height: fit-content;
+    min-height: 80vh;
+}
+
 .weekday {
-    border: solid 2px black;
+    border: solid 2px #212322;
+    background-color: #d7e3e8;
 }
 
 .weekday-column {
     border-radius: 10px 0px 0px 10px;
     margin: 5px -1px 5px -1px;
-
+    background-color: #d7e3e8;
 }
 
 .session-cards-column {
@@ -70,6 +107,12 @@
 
 .session-text {
     text-align: center;
+    color: #212322;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #212322;
+    font-size: 28px;
+    padding-bottom: 5px;
 }
 
 .weekday-text {
@@ -77,12 +120,14 @@
     margin-bottom: 0px;
     font-weight: bold;
     font-size: 20px;
+    color: #212322;
 }
 
 .session-length-text {
     text-align: center;
     margin-bottom: 2px;
     margin-top: -5px;
+    color: #212322;
 }
 
 .trash-icon {
@@ -98,14 +143,6 @@
     float: right;
     padding-left: 15px;
 }
-/* 
-.date-picker .input{
-    margin-top: 5px;
-    border: 2px solid black;
-    border-radius: 7px;
-    width: 100%;
-    height: 38px;
-} */
 
 input,
 select {
@@ -157,6 +194,7 @@ select {
         display: inline;
         height: 100%;
         margin-bottom:10px;
+        height: 100vh;
     }
 
     .session-card-row { 
