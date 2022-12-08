@@ -2,6 +2,9 @@
 
 This is a short programming task designed to let you demonstrate your skills in frontend web development. You should aim to spend around 2 hours on this task.
 
+## Wireframes and any notes on this task can be found at:
+- TaskNotes.md
+
 ## The Problem
 
 Users have a list of sessions they should complete within a week. Your task is to build a tool to help them organise those sessions within the week. For example, the user might have the following sessions:
